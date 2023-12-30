@@ -10,8 +10,8 @@ namespace WinForms231229_obslugaWyjatkow
 
         private void button1_Click(object sender, EventArgs e)
         {
-            FileStream fileStream;
-            StreamReader streamReader;
+            FileStream fileStream=null;
+            StreamReader streamReader=null;
             string wyjatekPoczatek = "wyjatek:\n";
             string path = textBox1.Text;
             string zawartosc = "";
@@ -28,9 +28,6 @@ namespace WinForms231229_obslugaWyjatkow
                 streamReader = new StreamReader(fileStream);
                 //wpisanie zawartoœci pliku
                 zawartosc = streamReader.ReadToEnd();
-                //zamykamy strumienie
-                streamReader.Close();
-                fileStream.Close();
             }
             catch(FileNotFoundException ex)
             {
@@ -43,6 +40,9 @@ namespace WinForms231229_obslugaWyjatkow
             finally
             {
                 richTextBox1.Text = zawartosc;
+                //zamykamy strumienie
+                if (streamReader!=null)  streamReader.Close();
+                if (fileStream != null)  fileStream.Close();
                 if (zawartosc != "")
                 {
                     labelWyjatek.Text = "wszystko OK";
